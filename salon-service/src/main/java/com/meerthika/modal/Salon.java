@@ -2,12 +2,14 @@ package com.meerthika.modal;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 @Entity
+@Data
 public class Salon {
 
     @Id

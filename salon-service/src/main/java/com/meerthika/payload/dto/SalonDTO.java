@@ -26,6 +26,8 @@ public class SalonDTO {
 
     private Long ownerId;
 
+    //we add this user details that's why dto is required
+    private UserDTO owner;
 
     private LocalTime openTime;
 

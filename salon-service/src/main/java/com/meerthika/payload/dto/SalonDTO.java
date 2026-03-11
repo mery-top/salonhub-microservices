@@ -1,10 +1,12 @@
 package com.meerthika.payload.dto;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalTime;
 import java.util.List;
 
+@Data
 public class SalonDTO {
 
 

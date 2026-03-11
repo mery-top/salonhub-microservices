@@ -51,6 +51,9 @@ public class SalonServiceImpl implements SalonService {
             exisitingSalon.setPhoneNumber(salon.getPhoneNumber());
             exisitingSalon.setOwnerId(user.getId());
 
+
+            return salonRepository.save(exisitingSalon);
+
         }
 
         throw new Exception("salon not exist");

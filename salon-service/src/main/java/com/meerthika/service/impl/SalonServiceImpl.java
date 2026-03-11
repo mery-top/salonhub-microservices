@@ -38,6 +38,8 @@ public class SalonServiceImpl implements SalonService {
     public Salon updateSalon(SalonDTO salon, UserDTO user, Long salonId) throws Exception{
 
         Salon exisitingSalon = salonRepository.findById(salonId).orElse(null);
+
+        //only owner should update the id
         if(exisitingSalon !=null && salon.getOwnerId().equals(user.getId())){
             exisitingSalon.setCity(salon.getCity());
             exisitingSalon.setName(salon.getName());
@@ -48,6 +50,7 @@ public class SalonServiceImpl implements SalonService {
             exisitingSalon.setCloseTime(salon.getCloseTime());
             exisitingSalon.setPhoneNumber(salon.getPhoneNumber());
             exisitingSalon.setOwnerId(user.getId());
+
         }
 
         throw new Exception("salon not exist");
@@ -56,24 +59,29 @@ public class SalonServiceImpl implements SalonService {
     @Override
     public List<Salon> getAllSalons() {
 
-        return List.of();
+        return salonRepository.findAll();
     }
 
     @Override
-    public Salon getSalonById(Long salonId) {
+    public Salon getSalonById(Long salonId) throws Exception {
+        Salon salon = salonRepository.findById(salonId).orElse(null);
+        if(salon == null){
+            throw new Exception("salon not exist");
+        }
 
-        return null;
+        return salon;
+
     }
 
     @Override
     public Salon getSalonByOwnerId(Long ownerId) {
 
-        return null;
+        return salonRepository.findByOwnerId(ownerId);
     }
 
     @Override
     public List<Salon> searchSalonByCity(String city) {
 
-        return List.of();
+        return salonRepository.searchSalons(city);
     }
 }

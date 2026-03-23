@@ -28,8 +28,8 @@ public class CategoryController {
     @GetMapping("{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id)
     throws Exception{
-        Category categories = categoryService.getCategoryById(id);
-        return ResponseEntity.ok(categories);
+        Category category = categoryService.getCategoryById(id);
+        return ResponseEntity.ok(category);
     }
 
 

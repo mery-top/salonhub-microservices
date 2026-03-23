@@ -77,5 +77,26 @@ public class SalonController {
     }
 
 
+    //http/localhost:5002/api/salons/search?city=mumbai
+    @GetMapping("/search")
+    public ResponseEntity<List<SalonDTO>> searchSalons(
+            @RequestParam("city") String city
+    ) throws Exception {
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(1L);
+        List<Salon> salons = salonService.searchSalonByCity(city);
+
+        List<SalonDTO> salonDTOS = salons.stream().map((salon)->
+                {
+                    SalonDTO salonDTO = SalonMapper.mapToDTO(salon);
+                    return salonDTO;
+                }
+        ).toList();
+
+        return ResponseEntity.ok(salonDTOS);
+    }
+
+
 
 }

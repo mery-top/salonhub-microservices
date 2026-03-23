@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Set<Category> getAllCategoriesBySalon(Long id) {
-        return Set.of();
+        return categoryRepository.findBySalonId(id);
     }
 
     @Override

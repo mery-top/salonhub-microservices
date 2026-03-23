@@ -6,6 +6,7 @@ import com.meerthika.payload.dto.SalonDTO;
 import com.meerthika.payload.dto.UserDTO;
 import com.meerthika.service.SalonService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class SalonController {
 
     private final SalonService salonService;
 
+    //http/localhost:5002/api/salons/2
     @PostMapping
     public ResponseEntity<SalonDTO> createSalon(@RequestBody SalonDTO salonDTO){
 
@@ -29,6 +31,7 @@ public class SalonController {
         return ResponseEntity.ok(salonDTO1);
     }
 
+    //http/localhost:5002/api/salons/2
     @PatchMapping("/{id}")
     public ResponseEntity<SalonDTO> updateSalon(@PathVariable("id") Long salonId, @RequestBody SalonDTO salonDTO) throws Exception {
 
@@ -40,6 +43,7 @@ public class SalonController {
         return ResponseEntity.ok(salonDTO1);
     }
 
+    //http/localhost:5002/api/salons
     @GetMapping
     public ResponseEntity<List<SalonDTO>> getSalons() throws Exception {
 
@@ -56,5 +60,22 @@ public class SalonController {
 
         return ResponseEntity.ok(salonDTOS);
     }
+
+    //http/localhost:5002/api/salons/5
+    @GetMapping("/{salonId}")
+    public ResponseEntity<SalonDTO> getSalonsById(
+            @PathVariable Long salonId
+    ) throws Exception {
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(1L);
+        Salon salon = salonService.getSalonById(salonId);
+        SalonDTO salonDTO = SalonMapper.mapToDTO(salon);
+
+        return ResponseEntity.ok(salonDTO);
+
+    }
+
+
 
 }

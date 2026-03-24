@@ -21,7 +21,17 @@ public class ServiceOfferingServiceImpl implements ServiceOfferingService {
 
     @Override
     public ServiceOffering createService(SalonDTO salonDTO, ServiceDTO serviceDTO, CategoryDTO categoryDTO) {
-        return null;
+
+        ServiceOffering serviceOffering = new ServiceOffering();
+        serviceOffering.setImage(serviceDTO.getImage());
+        serviceOffering.setSalonId(serviceDTO.getSalonId());
+        serviceOffering.setName(serviceDTO.getName());
+        serviceOffering.setDescription(serviceDTO.getDescription());
+        serviceOffering.setCategoryId(serviceDTO.getCategoryId());
+        serviceOffering.setPrice(serviceDTO.getPrice());
+        serviceOffering.setDuration(serviceDTO.getDuration());
+
+        return serviceOfferingRepository.save(serviceOffering);
     }
 
     @Override

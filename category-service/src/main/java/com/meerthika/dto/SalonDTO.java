@@ -1,6 +1,6 @@
 package com.meerthika.dto;
 
-import com.meerthika.payload.dto.UserDTO;
+import com.meerthika.dto.UserDTO;
 import lombok.Data;
 
 import java.time.LocalTime;

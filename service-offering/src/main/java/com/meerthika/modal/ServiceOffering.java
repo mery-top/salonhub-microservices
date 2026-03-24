@@ -18,4 +18,15 @@ public class ServiceOffering {
 
     @Column(nullable = false)
     private int price;
+
+    @Column(nullable = false)
+    private int duration;
+
+    @Column(nullable = false)
+    private Long salonId;
+
+    @Column(nullable = false)
+    private Long categoryId;
+
+    private String image;
 }

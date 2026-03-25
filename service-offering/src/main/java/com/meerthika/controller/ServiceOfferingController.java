@@ -21,37 +21,6 @@ public class ServiceOfferingController {
 
     private ServiceOfferingService serviceOfferingService;
 
-    public ServiceOffering createService(SalonDTO salonDTO, ServiceDTO serviceDTO, CategoryDTO categoryDTO) {
-
-        ServiceOffering serviceOffering = new ServiceOffering();
-        serviceOffering.setImage(serviceDTO.getImage());
-        serviceOffering.setSalonId(salonDTO.getId());
-        serviceOffering.setName(serviceDTO.getName());
-        serviceOffering.setDescription(serviceDTO.getDescription());
-        serviceOffering.setCategoryId(categoryDTO.getId());
-        serviceOffering.setPrice(serviceDTO.getPrice());
-        serviceOffering.setDuration(serviceDTO.getDuration());
-
-        return serviceOfferingRepository.save(serviceOffering);
-    }
-
-    public ServiceOffering updateService(Long serviceId, ServiceOffering service) throws Exception {
-
-        ServiceOffering serviceOffering = serviceOfferingRepository.findById(serviceId).orElse(null);
-
-        if(serviceOffering == null){
-            throw new Exception("service not exist with id" + serviceId);
-        }
-
-        serviceOffering.setImage(service.getImage());
-        serviceOffering.setName(service.getName());
-        serviceOffering.setDescription(service.getDescription());
-        serviceOffering.setPrice(service.getPrice());
-        serviceOffering.setDuration(service.getDuration());
-
-        return serviceOfferingRepository.save(serviceOffering);
-    }
-
     @GetMapping("/salon/{salonId}")
     public ResponseEntity<Set<ServiceOffering>> getAllServicesBySalonId(@PathVariable Long salonId, @RequestParam(required = false) Long categoryId) {
 

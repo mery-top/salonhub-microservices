@@ -6,6 +6,7 @@ import com.meerthika.dto.SalonDTO;
 import com.meerthika.dto.ServiceDTO;
 import com.meerthika.dto.UserDTO;
 import com.meerthika.modal.Booking;
+import com.meerthika.modal.SalonReport;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,4 +26,6 @@ public interface BookingService {
     Booking getBookingById(Long id);
     Booking updateBooking(Long bookingId, BookingStatus status);
     List<Booking> getBookingsByDate(LocalDate date, Long salonId);
+
+    SalonReport getSalonReport(Long salonId);
 }

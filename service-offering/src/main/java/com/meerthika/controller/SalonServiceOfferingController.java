@@ -35,7 +35,7 @@ public class SalonServiceOfferingController {
         return ResponseEntity.ok(serviceOfferings);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{serviceId}")
     public ResponseEntity<ServiceOffering> updateService(@PathVariable Long serviceId, @RequestBody ServiceOffering service) throws Exception {
 
         SalonDTO salonDTO = new SalonDTO();

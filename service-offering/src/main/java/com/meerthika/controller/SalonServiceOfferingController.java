@@ -5,13 +5,11 @@ import com.meerthika.dto.CategoryDTO;
 import com.meerthika.dto.SalonDTO;
 import com.meerthika.dto.ServiceDTO;
 import com.meerthika.modal.ServiceOffering;
+import com.meerthika.repository.ServiceOfferingRepository;
 import com.meerthika.service.ServiceOfferingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SalonServiceOfferingController {
 
     private final ServiceOfferingService serviceOfferingService;
+    private final ServiceOfferingRepository serviceOfferingRepository;
 
 
     @PostMapping
@@ -36,21 +35,18 @@ public class SalonServiceOfferingController {
         return ResponseEntity.ok(serviceOfferings);
     }
 
-    public ServiceOffering updateService(Long serviceId, ServiceOffering service) throws Exception {
+    @PostMapping("/{id}")
+    public ResponseEntity<ServiceOffering> updateService(@PathVariable Long serviceId, @RequestBody ServiceOffering service) throws Exception {
 
-        ServiceOffering serviceOffering = serviceOfferingRepository.findById(serviceId).orElse(null);
+        SalonDTO salonDTO = new SalonDTO();
+        salonDTO.setId(1L);
 
-        if(serviceOffering == null){
-            throw new Exception("service not exist with id" + serviceId);
-        }
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(1L);
 
-        serviceOffering.setImage(service.getImage());
-        serviceOffering.setName(service.getName());
-        serviceOffering.setDescription(service.getDescription());
-        serviceOffering.setPrice(service.getPrice());
-        serviceOffering.setDuration(service.getDuration());
+        ServiceOffering serviceOfferings = serviceOfferingService.updateService(serviceId, service);
 
-        return serviceOfferingRepository.save(serviceOffering);
+        return ResponseEntity.ok(serviceOfferings);
     }
 
 

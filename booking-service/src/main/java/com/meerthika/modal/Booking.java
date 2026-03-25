@@ -1,13 +1,16 @@
 package com.meerthika.modal;
 
 
+import com.meerthika.domain.BookingStatus;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Set;
 
 @Entity
+@Data
 public class Booking {
 
     @Id
@@ -26,7 +29,7 @@ public class Booking {
     @ElementCollection
     private Set<Long> serviceIds;
 
-    private BookingStatus status;
+    private BookingStatus status = BookingStatus.PENDING;
 
     private int totalServices;
     //based on count of serviceIds;

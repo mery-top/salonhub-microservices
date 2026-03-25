@@ -7,6 +7,9 @@ import com.meerthika.dto.ServiceDTO;
 import com.meerthika.modal.ServiceOffering;
 import com.meerthika.service.ServiceOfferingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,18 +20,20 @@ public class SalonServiceOfferingController {
 
     private final ServiceOfferingService serviceOfferingService;
 
-    public ServiceOffering createService(SalonDTO salonDTO, ServiceDTO serviceDTO, CategoryDTO categoryDTO) {
 
-        ServiceOffering serviceOffering = new ServiceOffering();
-        serviceOffering.setImage(serviceDTO.getImage());
-        serviceOffering.setSalonId(salonDTO.getId());
-        serviceOffering.setName(serviceDTO.getName());
-        serviceOffering.setDescription(serviceDTO.getDescription());
-        serviceOffering.setCategoryId(categoryDTO.getId());
-        serviceOffering.setPrice(serviceDTO.getPrice());
-        serviceOffering.setDuration(serviceDTO.getDuration());
+    @PostMapping
+    public ResponseEntity<ServiceOffering> createService(@RequestBody ServiceDTO serviceDTO) {
 
-        return serviceOfferingRepository.save(serviceOffering);
+        SalonDTO salonDTO = new SalonDTO();
+        salonDTO.setId(1L);
+
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(serviceDTO.getCategoryId());
+
+       ServiceOffering serviceOfferings = serviceOfferingService.createService(salonDTO, serviceDTO, categoryDTO);
+
+
+        return ResponseEntity.ok(serviceOfferings);
     }
 
     public ServiceOffering updateService(Long serviceId, ServiceOffering service) throws Exception {

@@ -6,6 +6,7 @@ import com.meerthika.dto.SalonDTO;
 import com.meerthika.dto.ServiceDTO;
 import com.meerthika.modal.ServiceOffering;
 import com.meerthika.service.ServiceOfferingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +17,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/service-offering")
+@RequiredArgsConstructor
 public class ServiceOfferingController {
 
 
-    private ServiceOfferingService serviceOfferingService;
+    private final ServiceOfferingService serviceOfferingService;
 
     @GetMapping("/salon/{salonId}")
     public ResponseEntity<Set<ServiceOffering>> getAllServicesBySalonId(@PathVariable Long salonId, @RequestParam(required = false) Long categoryId) {

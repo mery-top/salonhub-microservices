@@ -7,7 +7,9 @@ import com.meerthika.dto.ServiceDTO;
 import com.meerthika.dto.UserDTO;
 import com.meerthika.modal.Booking;
 import com.meerthika.modal.SalonReport;
+import com.meerthika.repository.BookingRepository;
 import com.meerthika.service.BookingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,7 +18,12 @@ import java.util.Set;
 
 
 @Service
+@RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
+
+    private final BookingRepository bookingRepository;
+
+
     @Override
     public Booking createBooking(BookingRequest booking, UserDTO user, SalonDTO salon, Set<ServiceDTO> serviceDTOSet) {
         return null;

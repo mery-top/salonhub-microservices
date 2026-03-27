@@ -1,17 +1,16 @@
 package com.meerthika.controller;
 
 
-import com.meerthika.dto.BookingRequest;
-import com.meerthika.dto.SalonDTO;
-import com.meerthika.dto.ServiceDTO;
-import com.meerthika.dto.UserDTO;
+import com.meerthika.dto.*;
 import com.meerthika.modal.Booking;
 import com.meerthika.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Book;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -43,5 +42,13 @@ public class BookingController {
 
         return ResponseEntity.ok(booking);
 
+    }
+
+
+    public ResponseEntity<Set<BookingDTO>> getBookingsByCustomer(
+
+    ){
+        List<Booking> bookings = bookingService.getBookingsByCustomer(1L);
+        return null;
     }
 }

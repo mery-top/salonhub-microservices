@@ -17,6 +17,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="user-service" />
         <module name="category-service" />
+        <module name="payment-service" />
         <module name="booking-service" />
       </profile>
       <profile name="Annotation profile for service-offering" enabled="true">
@@ -34,6 +35,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="booking-service" options="-parameters" />
       <module name="category-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
       <module name="salon-service" options="-parameters" />
       <module name="service-offering" options="-parameters" />
       <module name="user-service" options="-parameters" />

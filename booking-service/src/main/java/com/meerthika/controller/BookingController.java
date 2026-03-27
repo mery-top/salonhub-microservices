@@ -5,6 +5,7 @@ import com.meerthika.domain.BookingStatus;
 import com.meerthika.dto.*;
 import com.meerthika.mapper.BookingMapper;
 import com.meerthika.modal.Booking;
+import com.meerthika.modal.SalonReport;
 import com.meerthika.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -97,7 +98,7 @@ public class BookingController {
     @GetMapping("/slots/salon/{salonId}/date/{date}")
     public ResponseEntity<List<BookingSlotDTO>> getBookedSlot(
             @PathVariable Long salonId,
-            @RequestParam LocalDate date
+            @RequestParam(required = false) LocalDate date
             ) throws Exception {
         List<Booking> bookings = bookingService.getBookingsByDate(date, salonId);
 
@@ -110,6 +111,15 @@ public class BookingController {
                 }).collect(Collectors.toList());
 
         return ResponseEntity.ok(slotDTOS);
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<SalonReport> getSalonReport(
+
+    ) throws Exception {
+        SalonReport salonReport= bookingService.getSalonReport(1L);
+
+        return ResponseEntity.ok(salonReport);
     }
 
 

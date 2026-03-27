@@ -56,6 +56,16 @@ public class BookingController {
 
 
 
+    @GetMapping("/salon")
+    public ResponseEntity<Set<BookingDTO>> getBookingsBySalon(
+
+    ){
+        List<Booking> bookings = bookingService.getBookingsBySalon(1L);
+        return ResponseEntity.ok(getBookingDTOs(bookings));
+    }
+
+
+
     private Set<BookingDTO> getBookingDTOs(List<Booking> bookings){
         return bookings.stream()
                 .map(booking -> {

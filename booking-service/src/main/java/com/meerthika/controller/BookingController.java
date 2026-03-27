@@ -2,6 +2,7 @@ package com.meerthika.controller;
 
 
 import com.meerthika.dto.*;
+import com.meerthika.mapper.BookingMapper;
 import com.meerthika.modal.Booking;
 import com.meerthika.service.BookingService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import java.awt.print.Book;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -44,11 +46,20 @@ public class BookingController {
 
     }
 
-
+    @GetMapping("/customer")
     public ResponseEntity<Set<BookingDTO>> getBookingsByCustomer(
 
     ){
         List<Booking> bookings = bookingService.getBookingsByCustomer(1L);
-        return null;
+        return ResponseEntity.ok(getBookingDTOs(bookings));
+    }
+
+
+
+    private Set<BookingDTO> getBookingDTOs(List<Booking> bookings){
+        return bookings.stream()
+                .map(booking -> {
+                    return BookingMapper.toDTO(booking);
+                }).collect(Collectors.toSet());
     }
 }

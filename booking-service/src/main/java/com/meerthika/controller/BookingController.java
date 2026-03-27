@@ -72,4 +72,13 @@ public class BookingController {
                     return BookingMapper.toDTO(booking);
                 }).collect(Collectors.toSet());
     }
+
+
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<BookingDTO> getBookingById(
+        @PathVariable Long bookingId
+    ) throws Exception {
+        Booking booking = bookingService.getBookingById(bookingId);
+        return ResponseEntity.ok(BookingMapper.toDTO(booking));
+    }
 }

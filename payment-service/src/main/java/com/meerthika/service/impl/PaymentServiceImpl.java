@@ -10,6 +10,10 @@ import com.meerthika.service.PaymentService;
 import com.razorpay.PaymentLink;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
+import com.stripe.param.checkout.SessionCreateParams;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +36,7 @@ public class PaymentServiceImpl implements PaymentService {
     private String razorpayApiSecret;
 
     @Override
-    public PaymentLinkResponse createOrder(UserDTO user, BookingDTO booking, PaymentMethod paymentMethod) {
+    public PaymentLinkResponse createOrder(UserDTO user, BookingDTO booking, PaymentMethod paymentMethod) throws StripeException, RazorpayException {
 
         Long amount = (long) booking.getTotalPrice();
 
@@ -108,7 +112,32 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public String createStripePaymentLink(UserDTO user, Long amount, Long orderId) {
-        return "";
+    public String createStripePaymentLink(UserDTO user, Long amount, Long orderId) throws StripeException {
+
+        Stripe.apiKey = stripeSecretKey;
+
+        SessionCreateParams params = SessionCreateParams.builder()
+                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+                .setMode(SessionCreateParams.Mode.PAYMENT)
+                .setSuccessUrl("http://localhost:3000/payment-success/"+orderId)
+                .setCancelUrl("http://localhost:3000/payment/cancel")
+                .addLineItem(SessionCreateParams.LineItem.builder()
+                        .setQuantity(1L)
+                        .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
+                                .setCurrency("usd")
+                                .setUnitAmount(amount*100)
+                                .setProductData(SessionCreateParams
+                                        .LineItem
+                                        .PriceData
+                                        .ProductData
+                                        .builder().setName("salon appointment booking").build()
+                                ).build()
+                        ).build()
+                ).build();
+
+        Session session = Session.create(params);
+
+
+        return session.getUrl();
     }
 }

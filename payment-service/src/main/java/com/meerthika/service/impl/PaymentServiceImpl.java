@@ -1,12 +1,14 @@
 package com.meerthika.service.impl;
 
 import com.meerthika.domain.PaymentMethod;
+import com.meerthika.domain.PaymentOrderStatus;
 import com.meerthika.modal.PaymentOrder;
 import com.meerthika.payload.dto.BookingDTO;
 import com.meerthika.payload.dto.UserDTO;
 import com.meerthika.payload.response.PaymentLinkResponse;
 import com.meerthika.repository.PaymentOrderRepository;
 import com.meerthika.service.PaymentService;
+import com.razorpay.Payment;
 import com.razorpay.PaymentLink;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
@@ -139,5 +141,33 @@ public class PaymentServiceImpl implements PaymentService {
 
 
         return session.getUrl();
+    }
+
+    @Override
+    public Boolean proceedPayment(PaymentOrder paymentOrder, String paymentId, String paymentLinkId) throws RazorpayException {
+
+        if(paymentOrder.getStatus().equals(PaymentOrderStatus.PENDING)){
+            if(paymentOrder.getPaymentMethod().equals(PaymentMethod.RAZORPAY)){
+                RazorpayClient razorpayClient = new RazorpayClient(razorpayApiKey, razorpayApiSecret);
+                Payment payment = razorpayClient.payments.fetch(paymentId);
+                Integer amount = payment.get("amount");
+                String status = payment.get("status");
+
+                if(status.equals("captured")){
+
+                    // produce kafka or rabbitmq event
+                    paymentOrder.setStatus(PaymentOrderStatus.SUCCESS);
+                    paymentOrderRepository.save(paymentOrder);
+                    return true;
+                }
+
+                return false;
+
+            }else{
+                paymentOrder.setStatus(PaymentOrderStatus.SUCCESS);
+                paymentOrderRepository.save(paymentOrder);
+            }
+        }
+        return false;
     }
 }

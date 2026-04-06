@@ -8,7 +8,10 @@ import com.meerthika.payload.response.PaymentLinkResponse;
 import com.meerthika.repository.PaymentOrderRepository;
 import com.meerthika.service.PaymentService;
 import com.razorpay.PaymentLink;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -79,8 +82,29 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentLink createRazorpayPaymentLink(UserDTO user, Long amount, Long orderId) {
-        return null;
+    public PaymentLink createRazorpayPaymentLink(UserDTO user, Long amount, Long orderId) throws RazorpayException {
+
+        Long Amount = amount *100;
+        RazorpayClient razorpayClient = new RazorpayClient(razorpayApiKey, razorpayApiSecret);
+
+        JSONObject paymentLinkRequest = new JSONObject();
+        paymentLinkRequest.put("amount", amount);
+        paymentLinkRequest.put("currency", "INR");
+
+        JSONObject customer = new JSONObject();
+        customer.put("name", user.getFullName());
+        customer.put("email", user.getEmail());
+        paymentLinkRequest.put("customer", customer);
+
+
+        JSONObject notify = new JSONObject();
+        notify.put("email", true);
+        paymentLinkRequest.put("notify", notify);
+        paymentLinkRequest.put("remainder_enable", true);
+        paymentLinkRequest.put("callback_url", "http://localhost:3000/payment-success/"+orderId);
+        paymentLinkRequest.put("callback_method", "get");
+
+        return razorpayClient.paymentLink.create(paymentLinkRequest);
     }
 
     @Override

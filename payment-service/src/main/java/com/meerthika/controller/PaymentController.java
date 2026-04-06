@@ -2,6 +2,7 @@ package com.meerthika.controller;
 
 
 import com.meerthika.domain.PaymentMethod;
+import com.meerthika.modal.PaymentOrder;
 import com.meerthika.payload.dto.BookingDTO;
 import com.meerthika.payload.dto.UserDTO;
 import com.meerthika.payload.response.PaymentLinkResponse;
@@ -32,7 +33,16 @@ public class PaymentController {
         user.setId(1L);
 
         PaymentLinkResponse res = paymentService.createOrder(user, booking, paymentMethod);
-        return null;
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/{paymentOrderId}")
+    public ResponseEntity<PaymentOrder> getPaymentOrderById(
+            @PathVariable Long paymentOrderId
+    ) throws Exception {
+
+        PaymentOrder res = paymentService.getPaymentOrderById(paymentOrderId);
+        return ResponseEntity.ok(res);
     }
 
 

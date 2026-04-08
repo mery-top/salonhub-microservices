@@ -6,7 +6,7 @@ import com.meerthika.respository.UserRepository;
 import com.meerthika.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-
+import lombok.*;
 import java.util.List;
 import java.util.Optional;
 

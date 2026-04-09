@@ -1,0 +1,23 @@
+services:
+  eurekaserver:
+    image: meerthika/salon-eureka-server
+    ports:
+      - 8070:8070
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent eurekaserver:8070/actuator/health/readiness | grep UP || exist"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    container_name: eurekaserver
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - meerthika
+
+networks:
+  meerthika:
+    driver: bridge

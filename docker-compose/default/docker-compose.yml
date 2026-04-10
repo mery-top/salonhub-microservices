@@ -1,6 +1,6 @@
 services:
   eurekaserver:
-    image: meerthika/salon-eureka-server
+    image: meerthika/salon-eureka-server:v1
     ports:
       - 8070:8070
     healthcheck:
@@ -11,6 +11,26 @@ services:
       start_period: 10s
     container_name: eurekaserver
 
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - meerthika
+
+  user:
+    image: meerthika/salon-user-service:v1
+    ports:
+      - 5001:5001
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail --silent user:5001/actuator/health/readiness | grep UP || exist" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    container_name: user
+    environment:
+      SPRING_APPLICATION_NAME: "user-service"
     deploy:
       resources:
         limits:

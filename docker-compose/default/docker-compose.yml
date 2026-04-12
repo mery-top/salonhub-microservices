@@ -16,6 +16,7 @@ services:
       MYSQL_DATABASE: userdb
     networks:
       - meerthika
+
   bookingdb:
     image: mysql
     container_name: bookingdb
@@ -32,6 +33,26 @@ services:
       MYSQL_DATABASE: bookingdb
     networks:
       - meerthika
+
+  categorydb:
+    image: mysql
+    container_name: categorydb
+    ports:
+      - 3301:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: categorydb
+    networks:
+      - meerthika
+
+
+
 
   user:
     image: meerthika/salon-user-service:v1

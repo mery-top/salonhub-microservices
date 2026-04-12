@@ -1,11 +1,15 @@
 package com.meerthika.service;
 
 
+import com.meerthika.payload.dto.Credential;
 import com.meerthika.payload.dto.SignupDTO;
+import com.meerthika.payload.dto.UserRequest;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+
 
 @Data
 @RequiredArgsConstructor
@@ -34,7 +38,40 @@ public class KeycloakService {
 
     public void createUser(SignupDTO signupDTO) throws Exception{
 
+        String ACCESS_TOKEN="";
+        Credential credential = new Credential();
+        credential.setTemporary(false);
+        credential.setType("password");
+        credential.setValue(signupDTO.getPassword());
+
+
+        UserRequest userRequest = new UserRequest();
+        userRequest.setUsername(signupDTO.getUsername());
+        userRequest.setEmail(signupDTO.getEmail());
+        userRequest.setEnabled(true);
+        userRequest.setLastName(signupDTO.getLastName());
+        userRequest.setFirstName(signupDTO.getFirstName());
+
+        HttpHeaders headers= new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(ACCESS_TOKEN);
+
+        HttpEntity<UserRequest> requestEntity = new HttpEntity<>(userRequest, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                KEYCLOAK_ADMIN_API,
+                HttpMethod.POST,
+                requestEntity,
+                String.class
+        );
+
+        if(response.getStatusCode()==HttpStatus.CREATED){
+            System.out.println("user created successfully");
+        }
+
     }
+
+
 
 
 

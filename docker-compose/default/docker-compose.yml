@@ -51,7 +51,59 @@ services:
     networks:
       - meerthika
 
+  paymentdb:
+    image: mysql
+    container_name: paymentdb
+    ports:
+      - 3301:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: paymentdb
+    networks:
+      - meerthika
 
+
+
+
+  salondb:
+    image: mysql
+    container_name: salondb
+    ports:
+      - 3301:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: salondb
+    networks:
+      - meerthika
+
+  service-offeringdb:
+    image: mysql
+    container_name: service-offeringdb
+    ports:
+      - 3301:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: service-offeringdb
+    networks:
+      - meerthika
 
 
   user:

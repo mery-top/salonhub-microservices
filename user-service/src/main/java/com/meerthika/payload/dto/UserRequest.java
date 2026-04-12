@@ -3,6 +3,9 @@ package com.meerthika.payload.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class UserRequest {
 
@@ -10,6 +13,7 @@ public class UserRequest {
     private String lastName;
     private String email;
     private String username;
-    private String enabled;
+    private Boolean enabled;
+    private List<Credential> credentials = new ArrayList<>();
 
 }

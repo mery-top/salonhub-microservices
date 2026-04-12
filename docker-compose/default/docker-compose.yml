@@ -38,7 +38,7 @@ services:
     image: mysql
     container_name: categorydb
     ports:
-      - 3301:3306
+      - 3303:3306
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s

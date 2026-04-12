@@ -91,6 +91,35 @@ services:
       - meerthika
 
 
+  category:
+    image: meerthika/salon-category-service:v1
+    ports:
+      - 5003:5003
+    healthcheck:
+      test: "curl --fail --silent category:5003/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    container_name: category
+    depends_on:
+      categorydb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "category-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://categorydb:3306/categorydb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - meerthika
+
+
 
   eurekaserver:
     image: meerthika/salon-eureka-server:v1

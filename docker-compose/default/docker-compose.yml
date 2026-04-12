@@ -175,6 +175,36 @@ services:
     networks:
       - meerthika
 
+
+
+  service-offering:
+    image: meerthika/salon-service-offering:v1
+    ports:
+      - 5004:5004
+    healthcheck:
+      test: "curl --fail --silent service-offering:5004/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    container_name: service-offering
+    depends_on:
+      salondb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "service-offering"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://service-offeringdb:3306/service-offeringdb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - meerthika
+
   eurekaserver:
     image: meerthika/salon-eureka-server:v1
     ports:

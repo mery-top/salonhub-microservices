@@ -1,9 +1,11 @@
 package com.meerthika.service;
 
 
+import com.meerthika.payload.dto.SignupDTO;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.client.RestTemplate;
 
 @Data
 @RequiredArgsConstructor
@@ -28,6 +30,11 @@ public class KeycloakService {
     private static final String password= "admin";
     private static final String clientId="5de187fe-b51b-4c44-8454-a61912c5a087";
 
+    private final RestTemplate restTemplate;
+
+    public void createUser(SignupDTO signupDTO) throws Exception{
+
+    }
 
 
 

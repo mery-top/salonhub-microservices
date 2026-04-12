@@ -275,6 +275,31 @@ services:
     networks:
       - meerthika
 
+
+
+  gatewayserver:
+    image: meerthika/salon-gateway-server:v1
+    ports:
+      - 5007:5007
+    healthcheck:
+      test: "curl --fail --silent gatewayserver:5007/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    container_name: gatewayserver
+    environment:
+      SPRING_APPLICATION_NAME: "gateway-server"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - meerthika
+
+
   eurekaserver:
     image: meerthika/salon-eureka-server:v1
     ports:

@@ -2,7 +2,9 @@ package com.meerthika.service.impl;
 
 import com.meerthika.exception.UserException;
 import com.meerthika.modal.User;
+import com.meerthika.payload.dto.KeycloakUserDTO;
 import com.meerthika.respository.UserRepository;
+import com.meerthika.service.KeycloakService;
 import com.meerthika.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final KeycloakService keycloakService;
 
     @Override
     public User createUser(User user) {
@@ -61,5 +64,11 @@ public class UserServiceImpl implements UserService {
 
         //only use the id got from the existing user
         userRepository.deleteById(otp.get().getId());
+    }
+
+    @Override
+    public User getUserFromJwt(String jwt) throws Exception {
+        KeycloakUserDTO keycloakUserDTO = keycloakService.fetchUserProfileByJwt(jwt);
+        return userRepository.findByEmail(keycloakUserDTO.getEmail());
     }
 }

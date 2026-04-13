@@ -21,8 +21,19 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public AuthResponse login(String username, String password) {
-        return null;
+    public AuthResponse login(String username, String password) throws Exception {
+        TokenResponse tokenResponse = keycloakService.getAdminAccessToken(
+                username,
+                password,
+                "password", null
+        );
+
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setRefresh_token(tokenResponse.getRefreshToken());
+        authResponse.setJwt(tokenResponse.getAccessToken());
+        authResponse.setMessage("login success");
+
+        return authResponse;
     }
 
     @Override

@@ -187,7 +187,26 @@ public class KeycloakService {
             String clientId,
             List<KeycloakRole> roles,
             String token
-    ){
+    ) throws Exception {
+        String url = KEYCLOAK_BASE_URL+"/admin/realms/master/users/"+ userId+"/role-mappings/clients/"+clientId;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        HttpEntity<List<KeycloakRole>> requestEntity = new HttpEntity<>(roles,headers);
+
+        try{
+            ResponseEntity<String> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.POST,
+                    requestEntity,
+                    String.class
+            );
+        }catch (Exception e){
+            throw new Exception("Failed to assign new role"+ e.getMessage());
+        }
 
     }
 }

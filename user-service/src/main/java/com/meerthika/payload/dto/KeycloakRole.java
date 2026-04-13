@@ -1,7 +1,10 @@
 package com.meerthika.payload.dto;
 
+import lombok.Data;
+
 import java.util.Map;
 
+@Data
 public class KeycloakRole {
 
     private String id;

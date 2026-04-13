@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MultivaluedHashMap;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,28 +20,23 @@ import java.util.List;
 
 @Data
 @RequiredArgsConstructor
+@Service
 public class KeycloakService {
-    static Dotenv dotenv = Dotenv.load();
-    private static final String KeycloakClientSecret = dotenv.get("KEYCLOAK_CLIENT_SECRET");
-    private static final String KeycloakClientId = dotenv.get("KEYCLOAK_CLIENT_ID");
 
-    public void test() {
-        System.out.println(KeycloakClientSecret);
-    }
 
     private static final String KEYCLOAK_BASE_URL = "http://localhost:8080";
     private static final String KEYCLOAK_ADMIN_API = KEYCLOAK_BASE_URL + "/admin/realms/master/users";
     private static final String TOKEN_URL = KEYCLOAK_BASE_URL + "/realms/master/protocol/openid-connect/token";
-    private static final String CLIENT_ID = KeycloakClientId;
-    private static final String CLIENT_SECRET = KeycloakClientSecret;
+    private static final String CLIENT_ID = "salon-booking-client";
+    private static final String CLIENT_SECRET = "G37Lv0PUAnhAOJnXhDdlifiqzr6isPiQ";
 
 
     private static final String GRANT_TYPE = "password";
     private static final String scope = "openid profile email";
     private static final String username = "zosh";
     private static final String password = "admin";
-    //put the correct client id
-    private static final String clientId = "bcd0935c-93b8-4ac3-bc7e-c96361575415";
+    //put the correct client id of the url of the salon booking client
+    private static final String clientId = "5de187fe-b51b-4c44-8454-a61912c5a087";
 
     private final RestTemplate restTemplate;
 
@@ -57,8 +53,8 @@ public class KeycloakService {
         userRequest.setUsername(signupDTO.getUsername());
         userRequest.setEmail(signupDTO.getEmail());
         userRequest.setEnabled(true);
-        userRequest.setLastName(signupDTO.getLastName());
-        userRequest.setFirstName(signupDTO.getFirstName());
+        userRequest.setLastName(signupDTO.getFullName());
+        userRequest.getCredentials().add(credential);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -101,12 +97,12 @@ public class KeycloakService {
     ) throws Exception {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
 
         //one map with many values one key
-        MultivaluedMap<String, String> requestBody = new MultivaluedHashMap<>();
-        requestBody.add("grant_type", GRANT_TYPE);
+        LinkedMultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("grant_type", grantType);
         requestBody.add("username", username);
         requestBody.add("password", password);
         requestBody.add("refresh_token", refreshToken);
@@ -114,7 +110,7 @@ public class KeycloakService {
         requestBody.add("client_secret", CLIENT_SECRET);
         requestBody.add("scope", scope);
 
-        HttpEntity<MultivaluedMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
+        HttpEntity<LinkedMultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         ResponseEntity<TokenResponse> response = restTemplate.exchange(
                 TOKEN_URL,
@@ -138,7 +134,7 @@ public class KeycloakService {
         String url = KEYCLOAK_BASE_URL+"/admin/realms/master/clients/"+clientId+"/roles/"+role;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer"+token);
+        headers.set("Authorization", "Bearer "+token);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
 

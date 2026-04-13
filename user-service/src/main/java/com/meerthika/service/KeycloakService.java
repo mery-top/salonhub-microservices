@@ -210,7 +210,7 @@ public class KeycloakService {
     public KeycloakUserDTO fetchUserProfileByJwt(
             String token
     ) throws Exception {
-        String url = KEYCLOAK_BASE_URL+"realms/master/protocol/openid-connect/userinfo";
+        String url = KEYCLOAK_BASE_URL+"/realms/master/protocol/openid-connect/userinfo";
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization",token);

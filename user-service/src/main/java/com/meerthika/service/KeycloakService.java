@@ -98,7 +98,7 @@ public class KeycloakService {
                                              String password,
                                              String grantType,
                                              String refreshToken
-    ) {
+    ) throws Exception {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -112,24 +112,51 @@ public class KeycloakService {
         requestBody.add("refresh_token", refreshToken);
         requestBody.add("client_id", CLIENT_ID);
         requestBody.add("client_secret", CLIENT_SECRET);
+        requestBody.add("scope", scope);
 
         HttpEntity<MultivaluedMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                KEYCLOAK_ADMIN_API,
+        ResponseEntity<TokenResponse> response = restTemplate.exchange(
+                TOKEN_URL,
                 HttpMethod.POST,
                 requestEntity,
-                String.class
+                TokenResponse.class
         );
 
+        if(response.getStatusCode()==HttpStatus.OK && response.getBody() !=null){
+            return response.getBody();
+        }
 
-        return null;
+        throw new Exception("failed to get access token");
+
     }
 
     public KeycloakRole getRoleByName(
             String clientId, String token, String role
-    ) {
-        return null;
+    ) throws Exception {
+
+        String url = KEYCLOAK_BASE_URL+"/admin/realms/master/clients/"+clientId+"/roles/"+role;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer"+token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<KeycloakRole> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                requestEntity,
+                KeycloakRole.class
+        );
+
+        if(response.getBody() !=null){
+            return response.getBody();
+        }
+
+        throw new Exception("failed to get role by name");
+
     }
 
 

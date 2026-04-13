@@ -1,6 +1,7 @@
 package com.meerthika.payload.response;
 
 
+import com.meerthika.domain.UserRole;
 import lombok.Data;
 
 @Data
@@ -9,5 +10,5 @@ public class AuthResponse {
     private String refresh_token;
     private String message;
     private String title;
-    private String role;
+    private UserRole role;
 }

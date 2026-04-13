@@ -1,6 +1,7 @@
 package com.meerthika.payload.dto;
 
 
+import com.meerthika.domain.UserRole;
 import lombok.Data;
 
 @Data
@@ -10,6 +11,7 @@ public class SignupDTO {
     private String email;
     private String password;
     private String username;
+    private UserRole role;
 
 
 }

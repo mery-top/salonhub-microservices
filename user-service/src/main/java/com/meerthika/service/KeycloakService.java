@@ -133,7 +133,7 @@ public class KeycloakService {
 
     public KeycloakRole getRoleByName(
             String clientId, String token, String role
-    ) throws Exception {
+    ){
 
         String url = KEYCLOAK_BASE_URL+"/admin/realms/master/clients/"+clientId+"/roles/"+role;
 
@@ -151,17 +151,35 @@ public class KeycloakService {
                 KeycloakRole.class
         );
 
-        if(response.getBody() !=null){
-            return response.getBody();
-        }
-
-        throw new Exception("failed to get role by name");
+        return response.getBody();
 
     }
 
 
-    public KeycloakUserDTO fetchFirstUserByUsername(String username, String token) {
-        return null;
+    public KeycloakUserDTO fetchFirstUserByUsername(String username, String token) throws Exception {
+        String url = KEYCLOAK_BASE_URL+"/admin/realms/master/users?username="+username;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<KeycloakUserDTO[]> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                requestEntity,
+                KeycloakUserDTO[].class
+        );
+
+        KeycloakUserDTO[] users = response.getBody();
+        if(users!=null && users.length>0){
+            return users[0];
+        }
+
+        throw new Exception("user not found with username"+ username);
+
     }
 
     public void assignRoleToUser(

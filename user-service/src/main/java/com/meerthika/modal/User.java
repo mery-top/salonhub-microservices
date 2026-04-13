@@ -1,5 +1,6 @@
 package com.meerthika.modal;
 
+import com.meerthika.domain.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,13 +36,16 @@ public class User {
     private String phone;
 
     @NotBlank(message = "role is mandatory")
-    private String role;
+    private UserRole role;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @NotBlank(message = "password is mandatory")
+    private String password;
 
 
 }

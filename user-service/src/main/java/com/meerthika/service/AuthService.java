@@ -5,6 +5,6 @@ import com.meerthika.payload.response.AuthResponse;
 
 public interface AuthService {
     AuthResponse login(String username, String password);
-    AuthResponse signup(SignupDTO req);
+    AuthResponse signup(SignupDTO req) throws Exception;
     AuthResponse getAccessTokenFromRefreshToken(String refreshToken);
 }

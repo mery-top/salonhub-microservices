@@ -3,7 +3,9 @@ package com.meerthika.controller;
 import com.meerthika.exception.UserException;
 import com.meerthika.modal.User;
 import com.meerthika.respository.UserRepository;
+import com.meerthika.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -13,16 +15,27 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    private final UserService userService;
 
     @PostMapping("/api/users")
     public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
 
         User savedUser = userRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/api/users/profile")
+    public ResponseEntity<User> getUserProfile(@RequestHeader("Authorization") String jwt) throws Exception {
+
+        User user = userService.getUserFromJwt(jwt);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @GetMapping("/api/users")

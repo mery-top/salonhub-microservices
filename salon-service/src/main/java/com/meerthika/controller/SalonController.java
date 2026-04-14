@@ -5,6 +5,7 @@ import com.meerthika.modal.Salon;
 import com.meerthika.payload.dto.SalonDTO;
 import com.meerthika.payload.dto.UserDTO;
 import com.meerthika.service.SalonService;
+import com.meerthika.service.client.UserFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,14 @@ public class SalonController {
 
     private final SalonService salonService;
 
+    private final UserFeignClient userFeignClient;
+
     //http/localhost:5002/api/salons/2
     @PostMapping
-    public ResponseEntity<SalonDTO> createSalon(@RequestBody SalonDTO salonDTO){
+    public ResponseEntity<SalonDTO> createSalon(@RequestBody SalonDTO salonDTO,
+                                                @RequestHeader("Authorization") String jwt) throws Exception {
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(1L);
+        UserDTO userDTO= userFeignClient.getUserProfile(jwt).getBody();
         Salon salon = salonService.createSalon(salonDTO, userDTO);
 
         SalonDTO salonDTO1 = SalonMapper.mapToDTO(salon);
@@ -33,10 +36,11 @@ public class SalonController {
 
     //http/localhost:5002/api/salons/2
     @PatchMapping("/{id}")
-    public ResponseEntity<SalonDTO> updateSalon(@PathVariable("id") Long salonId, @RequestBody SalonDTO salonDTO) throws Exception {
+    public ResponseEntity<SalonDTO> updateSalon(@PathVariable("id") Long salonId,
+                                                @RequestBody SalonDTO salonDTO
+    , @RequestHeader("Authorization") String jwt) throws Exception {
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(1L);
+        UserDTO userDTO= userFeignClient.getUserProfile(jwt).getBody();
         Salon salon = salonService.updateSalon(salonDTO, userDTO, salonId);
 
         SalonDTO salonDTO1 = SalonMapper.mapToDTO(salon);
@@ -95,12 +99,16 @@ public class SalonController {
 
     @GetMapping("/owner")
     public ResponseEntity<SalonDTO> getSalonsByOwnerId(
-            @PathVariable Long salonId
+            @RequestHeader("Authorization") String jwt
     ) throws Exception {
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(1L);
-        Salon salon = salonService.getSalonByOwnerId(salonId);
+        UserDTO userDTO= userFeignClient.getUserProfile(jwt).getBody();
+
+        if(userDTO == null){
+            throw new Exception("user not found from jwt..");
+        }
+
+        Salon salon = salonService.getSalonByOwnerId(userDTO.getId());
         SalonDTO salonDTO = SalonMapper.mapToDTO(salon);
 
         return ResponseEntity.ok(salonDTO);

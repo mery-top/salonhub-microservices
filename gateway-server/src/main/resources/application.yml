@@ -44,6 +44,13 @@ spring:
           predicates:
             - Path=/api/service-offering/**
 
+  security:
+    oauth2:
+      resource server:
+        jwt:
+          jwt-set-uri: "http://localhost:8080/realms/master/protocol/openid-connect/certs"
+
+
 
 
 server:

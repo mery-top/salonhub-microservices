@@ -49,7 +49,7 @@ public class SecurityConfig {
     private Converter<Jwt,? extends Mono<? extends AbstractAuthenticationToken>> grantAuthoritiesExtractor() {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(
-                new KeyCloakRoleConverter();
+                new KeycloakConverter()
         );
         return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
 

@@ -37,6 +37,6 @@ public class KeycloakConverter implements Converter<Jwt, Collection<GrantedAutho
             });
         }
 
-        return null;
+        return authorities;
     }
 }

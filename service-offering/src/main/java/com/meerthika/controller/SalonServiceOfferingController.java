@@ -7,6 +7,8 @@ import com.meerthika.dto.ServiceDTO;
 import com.meerthika.modal.ServiceOffering;
 import com.meerthika.repository.ServiceOfferingRepository;
 import com.meerthika.service.ServiceOfferingService;
+import com.meerthika.service.client.CategoryFeignClient;
+import com.meerthika.service.client.SalonFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,31 +20,32 @@ public class SalonServiceOfferingController {
 
     private final ServiceOfferingService serviceOfferingService;
     private final ServiceOfferingRepository serviceOfferingRepository;
+    private final SalonFeignClient salonFeignClient;
+    private final CategoryFeignClient categoryFeignClient;
 
 
     @PostMapping
-    public ResponseEntity<ServiceOffering> createService(@RequestBody ServiceDTO serviceDTO) {
+    public ResponseEntity<ServiceOffering> createService(@RequestBody ServiceDTO serviceDTO,
+                                                         @RequestHeader("Authorization") String jwt
+    ) throws Exception {
+        SalonDTO salonDTO = salonFeignClient.getSalonsByOwnerId(jwt).getBody();
 
-        SalonDTO salonDTO = new SalonDTO();
-        salonDTO.setId(1L);
+        CategoryDTO categoryDTO = categoryFeignClient.getCategoryById(serviceDTO.getCategoryId()).getBody();
 
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setId(serviceDTO.getCategoryId());
-
-       ServiceOffering serviceOfferings = serviceOfferingService.createService(salonDTO, serviceDTO, categoryDTO);
+        ServiceOffering serviceOfferings = serviceOfferingService.createService(salonDTO, serviceDTO, categoryDTO);
 
 
         return ResponseEntity.ok(serviceOfferings);
     }
 
     @PostMapping("/{serviceId}")
-    public ResponseEntity<ServiceOffering> updateService(@PathVariable Long serviceId, @RequestBody ServiceOffering service) throws Exception {
+    public ResponseEntity<ServiceOffering> updateService(@PathVariable Long serviceId,
+                                                         @RequestBody ServiceOffering service,
+                                                         @RequestHeader("Authorization") String jwt) throws Exception {
 
-        SalonDTO salonDTO = new SalonDTO();
-        salonDTO.setId(1L);
+        SalonDTO salonDTO = salonFeignClient.getSalonsByOwnerId(jwt).getBody();
 
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setId(1L);
+        CategoryDTO categoryDTO = categoryFeignClient.getCategoryById(service.getCategoryId()).getBody();
 
         ServiceOffering serviceOfferings = serviceOfferingService.updateService(serviceId, service);
 

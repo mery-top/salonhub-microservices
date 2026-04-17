@@ -48,7 +48,7 @@ public class BookingController {
         Booking booking = bookingService.createBooking(bookingRequest, user, salon, serviceDTOSet);
 
         BookingDTO bookingDTO = BookingMapper.toDTO(booking);
-        paymentFeignClient.createPaymentLink(bookingDTO, paymentMethod);
+        paymentFeignClient.createPaymentLink(bookingDTO, paymentMethod, jwt);
 
         return ResponseEntity.ok(booking);
 
@@ -70,9 +70,10 @@ public class BookingController {
 
     @GetMapping("/salon")
     public ResponseEntity<Set<BookingDTO>> getBookingsBySalon(
-
-    ){
-        List<Booking> bookings = bookingService.getBookingsBySalon(1L);
+    @RequestHeader("Authorization") String jwt
+    ) throws Exception {
+        SalonDTO salonDTO = salonFeignClient.getSalonsByOwnerId(jwt).getBody();
+        List<Booking> bookings = bookingService.getBookingsBySalon(salonDTO.getId());
         return ResponseEntity.ok(getBookingDTOs(bookings));
     }
 
@@ -124,9 +125,10 @@ public class BookingController {
 
     @GetMapping("/report")
     public ResponseEntity<SalonReport> getSalonReport(
-
+            @RequestHeader("Authorization") String jwt
     ) throws Exception {
-        SalonReport salonReport= bookingService.getSalonReport(1L);
+        SalonDTO salonDTO = salonFeignClient.getSalonsByOwnerId(jwt).getBody();
+        SalonReport salonReport= bookingService.getSalonReport(salonDTO.getId());
 
         return ResponseEntity.ok(salonReport);
     }

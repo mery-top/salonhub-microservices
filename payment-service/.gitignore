@@ -33,3 +33,4 @@ build/
 .vscode/
 
 *.env
+*/Users/meerthikasr/Desktop/micorservices/payment-service/src/main/resources/application.yml

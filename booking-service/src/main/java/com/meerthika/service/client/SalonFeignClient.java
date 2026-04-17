@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient("SALON-SERVICE")
 public interface SalonFeignClient {
 
+    @GetMapping("/api/salons/owner")
+    public ResponseEntity<SalonDTO> getSalonsByOwnerId(
+            @RequestHeader("Authorization") String jwt
+    ) throws Exception;
+
     @GetMapping("/api/salons/{salonId}")
     public ResponseEntity<SalonDTO> getSalonsById(
             @PathVariable Long salonId

@@ -56,6 +56,7 @@ public class BookingServiceImpl implements BookingService {
         newBooking.setEndTime(bookingEndTime);
         newBooking.setTotalPrice(totalPrice);
 
+
         return bookingRepository.save(newBooking);
     }
 

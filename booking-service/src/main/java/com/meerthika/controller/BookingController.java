@@ -45,6 +45,9 @@ public class BookingController {
         SalonDTO salon = salonFeignClient.getSalonsById(salonId).getBody();
 
         Set<ServiceDTO> serviceDTOSet  = serviceOfferingFeignClient.getServicesByIds(bookingRequest.getServiceIds()).getBody();
+        if(serviceDTOSet.isEmpty()){
+            throw new Exception("service not found");
+        }
         Booking booking = bookingService.createBooking(bookingRequest, user, salon, serviceDTOSet);
 
         BookingDTO bookingDTO = BookingMapper.toDTO(booking);

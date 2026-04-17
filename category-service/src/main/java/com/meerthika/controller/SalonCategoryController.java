@@ -3,6 +3,7 @@ package com.meerthika.controller;
 import com.meerthika.dto.SalonDTO;
 import com.meerthika.modal.Category;
 import com.meerthika.service.CategoryService;
+import com.meerthika.service.client.SalonFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,12 @@ import java.util.Set;
 public class SalonCategoryController {
 
     private final CategoryService categoryService;
+    private final SalonFeignClient salonFeignClient;
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category){
-        SalonDTO salonDTO = new SalonDTO();
-        salonDTO.setId(1L);
+    public ResponseEntity<Category> createCategory(@RequestBody Category category,
+    @RequestHeader("Authorization") String jwt) throws Exception {
+        SalonDTO salonDTO = salonFeignClient.getSalonsByOwnerId(jwt).getBody();
         Category savedCategory = categoryService.saveCategory(category, salonDTO);
 
         return ResponseEntity.ok(savedCategory);
@@ -34,6 +36,13 @@ public class SalonCategoryController {
 
 
         return ResponseEntity.ok("category deleted sucesssfully");
+    }
+
+    @GetMapping("/salon/{salonId}/category/{id}")
+    public ResponseEntity<Category> getCategoriesByIdAndSalon(@PathVariable Long id,
+                                                                   @PathVariable Long salonId) throws Exception {
+        Category category = categoryService.findByIdAndSalonId(id, salonId);
+        return ResponseEntity.ok(category);
     }
 
 

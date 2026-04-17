@@ -29,8 +29,8 @@ public class SalonCategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Long id) throws Exception{
-        SalonDTO salonDTO = new SalonDTO();
+    public ResponseEntity<String> deleteCategory(@PathVariable Long id,@RequestHeader("Authorization") String jwt ) throws Exception{
+        SalonDTO salonDTO = salonFeignClient.getSalonsByOwnerId(jwt).getBody();
         salonDTO.setId(1L);
         categoryService.deleteCategoryById(id, salonDTO.getId());
 

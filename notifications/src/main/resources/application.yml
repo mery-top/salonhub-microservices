@@ -4,5 +4,22 @@ server:
 spring:
   application:
     name: notifications
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/notificationdb?createDatabaseIfNotExist=true
+    username: root
+    password: root
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: "http://localhost:8070/eureka/"
 
 

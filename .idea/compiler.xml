@@ -15,6 +15,7 @@
         <module name="user-service" />
         <module name="eureka-server" />
         <module name="service-offering" />
+        <module name="notifications" />
       </profile>
     </annotationProcessing>
   </component>
@@ -24,6 +25,7 @@
       <module name="category-service" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
+      <module name="notifications" options="-parameters" />
       <module name="payment-service" options="-parameters" />
       <module name="salon-service" options="-parameters" />
       <module name="service-offering" options="-parameters" />

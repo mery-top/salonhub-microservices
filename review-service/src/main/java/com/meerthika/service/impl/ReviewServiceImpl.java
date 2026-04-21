@@ -6,9 +6,13 @@ import com.meerthika.dto.UserDTO;
 import com.meerthika.modal.Review;
 import com.meerthika.repository.ReviewRepository;
 import com.meerthika.service.ReviewService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
     private ReviewRepository reviewRepository;

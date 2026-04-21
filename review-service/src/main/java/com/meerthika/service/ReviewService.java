@@ -19,5 +19,5 @@ public interface ReviewService {
 
     Review updateReview(ReviewRequest req, Long reviewId, Long userId) throws Exception;
 
-    void deleteReview(Long reviewId, Long userId);
+    void deleteReview(Long reviewId, Long userId) throws Exception;
 }

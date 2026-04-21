@@ -49,7 +49,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void deleteReview(Long reviewId, Long userId) {
-
+    public void deleteReview(Long reviewId, Long userId) throws Exception {
+        Review review = getReviewById(reviewId);
+        if(!review.getUserId().equals(userId)){
+            throw new Exception("You don't have permission to delete this review");
+        }
+        reviewRepository.delete(review);
     }
 }

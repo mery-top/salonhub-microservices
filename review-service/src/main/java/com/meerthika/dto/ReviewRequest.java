@@ -6,5 +6,5 @@ import lombok.Data;
 public class ReviewRequest {
 
     private String reviewText;
-    private String rating;
+    private double rating;
 }

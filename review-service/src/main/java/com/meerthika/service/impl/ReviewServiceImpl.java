@@ -27,12 +27,25 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getReviewsBySalonId(Long salonId) {
-        return List.of();
+        return reviewRepository.findBySalonId(salonId);
+    }
+
+    private Review getReviewById(Long id) throws Exception{
+        return reviewRepository.findById(id).orElseThrow(
+                () -> new Exception("review not exist")
+        );
     }
 
     @Override
-    public Review updateReview(ReviewRequest req, Long reviewId, Long userId) {
-        return null;
+    public Review updateReview(ReviewRequest req, Long reviewId, Long userId) throws Exception {
+        Review review = getReviewById(reviewId);
+        if(!review.getUserId().equals(userId)){
+            throw new Exception("You don't have permission to update this review");
+        }
+
+        review.setReviewText(req.getReviewText());
+        review.setRating(req.getRating());
+        return reviewRepository.save(review);
     }
 
     @Override

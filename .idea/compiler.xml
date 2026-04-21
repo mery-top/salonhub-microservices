@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="category-service" />
         <module name="payment-service" />
+        <module name="review-service" />
         <module name="booking-service" />
         <module name="gateway-server" />
         <module name="salon-service" />
@@ -27,6 +28,7 @@
       <module name="gateway-server" options="-parameters" />
       <module name="notifications" options="-parameters" />
       <module name="payment-service" options="-parameters" />
+      <module name="review-service" options="-parameters" />
       <module name="salon-service" options="-parameters" />
       <module name="service-offering" options="-parameters" />
       <module name="user-service" options="-parameters" />

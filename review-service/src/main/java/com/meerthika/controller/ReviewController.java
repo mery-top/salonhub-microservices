@@ -1,5 +1,6 @@
 package com.meerthika.controller;
 
+import com.meerthika.dto.ApiResponse;
 import com.meerthika.dto.ReviewRequest;
 import com.meerthika.dto.SalonDTO;
 import com.meerthika.dto.UserDTO;
@@ -48,7 +49,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 
-    @GetMapping("/{reviewId}")
+    @PutMapping("/{reviewId}")
     public ResponseEntity<Review> updateReview(
             @PathVariable Long reviewId,
             @RequestBody ReviewRequest req,
@@ -60,6 +61,21 @@ public class ReviewController {
         Review review = reviewService.updateReview(req, reviewId, user.getId());
 
         return ResponseEntity.ok(review);
+    }
+
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<ApiResponse> deleteReview(
+            @PathVariable Long reviewId,
+            @RequestHeader("Authorization") String jwt
+    ) throws Exception {
+
+        UserDTO user = userFeignClient.getUserProfile(jwt).getBody();
+
+        reviewService.deleteReview(reviewId, user.getId());
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setMessage("Review Deleted");
+
+        return ResponseEntity.ok(apiResponse);
     }
 
 

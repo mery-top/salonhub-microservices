@@ -48,7 +48,19 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 
+    @GetMapping("/{reviewId}")
+    public ResponseEntity<Review> updateReview(
+            @PathVariable Long reviewId,
+            @RequestBody ReviewRequest req,
+            @RequestHeader("Authorization") String jwt
+    ) throws Exception {
 
+        UserDTO user = userFeignClient.getUserProfile(jwt).getBody();
+
+        Review review = reviewService.updateReview(req, reviewId, user.getId());
+
+        return ResponseEntity.ok(review);
+    }
 
 
 

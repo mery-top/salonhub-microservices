@@ -44,11 +44,11 @@ spring:
           predicates:
             - Path=/api/service-offering/**
 
-        - id: NOTIFICATION-SERVICE
+        - id: REVIEW-SERVICE
           uri:
-            lb://NOTIFICATION-SERVICE
+            lb://REVIEW-SERVICE
           predicates:
-            - Path=/api/notifications/**
+            - Path=/api/reviews/**
 
   security:
     oauth2:

@@ -107,11 +107,21 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Source: https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
+		<!-- Openfeign
+		Source: https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>4.3.2</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Rabbitmq
+		 Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-amqp -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+			<version>4.0.5</version>
 			<scope>compile</scope>
 		</dependency>
 

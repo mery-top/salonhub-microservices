@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/reviews")
 @RequiredArgsConstructor
@@ -34,6 +36,21 @@ public class ReviewController {
 
         return ResponseEntity.ok(review);
     }
+    @GetMapping("/salon/{salonId}")
+    public ResponseEntity<List<Review>> getReviewById(
+            @PathVariable Long salonId,
+            @RequestHeader("Authorization") String jwt
+    ) throws Exception {
+
+        SalonDTO salon = salonFeignClient.getSalonsById(salonId).getBody();
+        List<Review> reviews = reviewService.getReviewsBySalonId(salon.getId());
+
+        return ResponseEntity.ok(reviews);
+    }
+
+
+
+
 
 
 

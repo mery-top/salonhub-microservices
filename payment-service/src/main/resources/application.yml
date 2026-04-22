@@ -9,6 +9,11 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/paymentdb?createDatabaseIfNotExist=true
     username: root
     password: root
+  rabbitmq:
+    port: 5672
+    host: rabbit
+    username: guest
+    password: guest
 
 stripe:
   api:

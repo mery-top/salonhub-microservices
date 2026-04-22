@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
 
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public Review createReview(ReviewRequest req, UserDTO user, SalonDTO salon) {

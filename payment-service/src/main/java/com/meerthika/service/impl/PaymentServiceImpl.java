@@ -2,6 +2,8 @@ package com.meerthika.service.impl;
 
 import com.meerthika.domain.PaymentMethod;
 import com.meerthika.domain.PaymentOrderStatus;
+import com.meerthika.messaging.BookingEventProducer;
+import com.meerthika.messaging.NotificationEventProducer;
 import com.meerthika.modal.PaymentOrder;
 import com.meerthika.payload.dto.BookingDTO;
 import com.meerthika.payload.dto.UserDTO;
@@ -27,6 +29,8 @@ import org.springframework.stereotype.Service;
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentOrderRepository paymentOrderRepository;
+    private final BookingEventProducer bookingEventProducer;
+    private final NotificationEventProducer notificationEventProducer;
 
     @Value("${stripe.api.key}")
     private String stripeSecretKey;
@@ -157,6 +161,9 @@ public class PaymentServiceImpl implements PaymentService {
                 if(status.equals("captured")){
 
                     // produce kafka or rabbitmq event
+                    bookingEventProducer.sentBookingUpdateEvent(paymentOrder);
+                    notificationEventProducer.sentNotification(paymentOrder.getBookingId(), paymentOrder.getUserId(), paymentOrder.getSalonId());
+
                     paymentOrder.setStatus(PaymentOrderStatus.SUCCESS);
                     paymentOrderRepository.save(paymentOrder);
                     return true;

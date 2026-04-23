@@ -12,6 +12,11 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/notificationdb?createDatabaseIfNotExist=true
     username: root
     password: root
+  rabbitmq:
+    port: 5672
+    host: rabbit
+    username: guest
+    password: guest
 
 eureka:
   instance:

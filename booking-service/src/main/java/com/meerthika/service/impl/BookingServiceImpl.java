@@ -6,6 +6,7 @@ import com.meerthika.dto.SalonDTO;
 import com.meerthika.dto.ServiceDTO;
 import com.meerthika.dto.UserDTO;
 import com.meerthika.modal.Booking;
+import com.meerthika.modal.PaymentOrder;
 import com.meerthika.modal.SalonReport;
 import com.meerthika.repository.BookingRepository;
 import com.meerthika.service.BookingService;
@@ -159,5 +160,13 @@ public class BookingServiceImpl implements BookingService {
         report.setTotalEarnings(totalEarnings);
         report.setTotalRefund(totalRefund);
         return null;
+    }
+
+    @Override
+    public Booking bookingSuccess(PaymentOrder order) throws Exception {
+        Booking exisitingBooking = getBookingById(order.getBookingId());
+        exisitingBooking.setStatus(BookingStatus.CONFIRMED);
+        return bookingRepository.save(exisitingBooking);
+
     }
 }

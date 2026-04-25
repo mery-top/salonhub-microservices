@@ -99,7 +99,7 @@ public class PaymentServiceImpl implements PaymentService {
         RazorpayClient razorpayClient = new RazorpayClient(razorpayApiKey, razorpayApiSecret);
 
         JSONObject paymentLinkRequest = new JSONObject();
-        paymentLinkRequest.put("amount", amount);
+        paymentLinkRequest.put("amount", Amount);
         paymentLinkRequest.put("currency", "INR");
 
         JSONObject customer = new JSONObject();
@@ -111,7 +111,7 @@ public class PaymentServiceImpl implements PaymentService {
         JSONObject notify = new JSONObject();
         notify.put("email", true);
         paymentLinkRequest.put("notify", notify);
-        paymentLinkRequest.put("remainder_enable", true);
+        paymentLinkRequest.put("reminder_enable", true);
         paymentLinkRequest.put("callback_url", "http://localhost:3000/payment-success/"+orderId);
         paymentLinkRequest.put("callback_method", "get");
 

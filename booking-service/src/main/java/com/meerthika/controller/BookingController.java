@@ -37,7 +37,7 @@ public class BookingController {
     private final PaymentFeignClient paymentFeignClient;
 
     @PostMapping
-    public ResponseEntity<Booking> createBooking(@RequestParam Long salonId,
+    public ResponseEntity<PaymentLinkResponse> createBooking(@RequestParam Long salonId,
                                                  @RequestBody BookingRequest bookingRequest,
                                                  @RequestParam PaymentMethod paymentMethod,
                                                  @RequestHeader("Authorization") String jwt) throws Exception {
@@ -51,9 +51,9 @@ public class BookingController {
         Booking booking = bookingService.createBooking(bookingRequest, user, salon, serviceDTOSet);
 
         BookingDTO bookingDTO = BookingMapper.toDTO(booking);
-        paymentFeignClient.createPaymentLink(bookingDTO, paymentMethod, jwt);
+        PaymentLinkResponse paymentResponse = paymentFeignClient.createPaymentLink(bookingDTO, paymentMethod, jwt).getBody();
 
-        return ResponseEntity.ok(booking);
+        return ResponseEntity.ok(paymentResponse);
 
     }
 

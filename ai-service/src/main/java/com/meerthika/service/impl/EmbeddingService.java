@@ -18,6 +18,8 @@ public class EmbeddingService implements EmbeddingGenerator {
 
     private final WebClient webClient = WebClient.create("http://localhost:8001");
 
+
+
     public List<Float> generateEmbedding(MultipartFile file) {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", file.getResource());

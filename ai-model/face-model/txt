@@ -1,0 +1,3 @@
+python -m uvicorn main:app --reload  --port 8001   
+python3.10 -m venv venv310               
+source venv310/bin/activate   

@@ -9,3 +9,21 @@ spring:
       api-key: YOUR_API_KEY
       chat:
         model: gpt-4.1-mini
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/hairstyledb
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: "http://localhost:8070/eureka/"

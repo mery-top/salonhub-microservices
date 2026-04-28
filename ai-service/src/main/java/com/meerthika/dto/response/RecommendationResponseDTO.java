@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 public class RecommendationResponseDTO {
     private HairAttributeDTO attributes;
-    private List<HairstyleImageDTO> similarStyles;
+//    private List<HairstyleImageDTO> similarStyles;
     private String explanation;
 }

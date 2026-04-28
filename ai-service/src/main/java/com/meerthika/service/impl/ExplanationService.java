@@ -2,13 +2,13 @@ package com.meerthika.service.impl;
 
 import com.meerthika.service.ExplanationGenerator;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.ChatClient.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ExplanationService implements ExplanationGenerator {
 
-    @Autowired
     private ChatClient chatClient;
 
     public ExplanationService(ChatClient.Builder builder) {
@@ -22,8 +22,6 @@ public class ExplanationService implements ExplanationGenerator {
     }
 
     public String generateExplanation(String faceShape, String skinTone) {
-
-        //provide the vector store for sending the context to the prompt
 
         String prompt = """
             Suggest hairstyles and hair colors.

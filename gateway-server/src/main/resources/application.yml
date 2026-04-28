@@ -50,6 +50,12 @@ spring:
           predicates:
             - Path=/api/reviews/**
 
+        - id: AI-SERVICE
+          uri:
+            lb://AI-SERVICE
+          predicates:
+            - Path=/api/hair/**
+
   security:
     oauth2:
       resourceserver:

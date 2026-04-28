@@ -1,8 +1,10 @@
 package com.meerthika.controller;
 
 import com.meerthika.dto.HairAttributeDTO;
+import com.meerthika.dto.response.RecommendationResponseDTO;
 import com.meerthika.service.impl.EmbeddingService;
 import com.meerthika.service.impl.ImageProcessingService;
+import com.meerthika.service.impl.RecommendationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,19 +20,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HairController {
 
-//    private final RecommendationService recommendationService;
+    private final RecommendationService recommendationService;
     private final ImageProcessingService imageProcessingService;
-    private final EmbeddingService embeddingService;
 
-//    @PostMapping("/analyze")
-//    public Object analyze(@RequestParam("file") MultipartFile file) {
-//        return recommendationService.processImage(file);
-//    }
-
-    @PostMapping("/check")
-    public ResponseEntity<List<Float>> image(@RequestParam("file") MultipartFile file){
-        List<Float> embed =  embeddingService.generateEmbedding(file);
-        return ResponseEntity.ok(embed);
+    @PostMapping("/analyze")
+    public ResponseEntity<RecommendationResponseDTO> analyze(@RequestParam("file") MultipartFile file) {
+        RecommendationResponseDTO response = recommendationService.processImage(file);
+        return ResponseEntity.ok(response);
     }
+
+
 
 }

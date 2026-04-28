@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/main/java/com/meerthika/service/EmbeddingGenerator.java
+src/main/java/com/meerthika/service/impl/EmbeddingService.java
+src/main/java/com/meerthika/service/VectorSearcher.java
+src/main/java/com/meerthika/service/impl/VectorSearchService.java

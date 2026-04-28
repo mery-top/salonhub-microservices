@@ -11,6 +11,16 @@ public class ExplanationService implements ExplanationGenerator {
     @Autowired
     private ChatClient chatClient;
 
+    public ExplanationService(ChatClient.Builder builder) {
+        this.chatClient = builder
+                .defaultSystem("""
+                    You are an expert hairstylist and beauty advisor.
+                    Suggest hairstyles and hair colors based on face shape and skin tone.
+                    Be specific, practical, and trendy.
+                """)
+                .build();
+    }
+
     public String generateExplanation(String faceShape, String skinTone) {
 
         //provide the vector store for sending the context to the prompt

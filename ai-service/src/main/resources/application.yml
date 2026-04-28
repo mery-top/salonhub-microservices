@@ -5,11 +5,11 @@ spring:
   application:
     name: ai-service
   ai:
-    google:
-      api-key: YOUR_GEMINI_API_KEY
-
+    ollama:
+      base-url: http://localhost:11434
       chat:
-        model: gemini-1.5-flash
+        options:
+          model: gemma:2b
 
 
   datasource:

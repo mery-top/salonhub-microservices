@@ -5,10 +5,11 @@ spring:
   application:
     name: ai-service
   ai:
-    openai:
-      api-key: YOUR_API_KEY
+    google:
+      api-key: YOUR_GEMINI_API_KEY
+
       chat:
-        model: gpt-4.1-mini
+        model: gemini-1.5-flash
 
 
   datasource:

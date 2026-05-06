@@ -1,9 +1,6 @@
 package com.meerthika.controller;
 
-import com.meerthika.dto.ApiResponse;
-import com.meerthika.dto.ReviewRequest;
-import com.meerthika.dto.SalonDTO;
-import com.meerthika.dto.UserDTO;
+import com.meerthika.dto.*;
 import com.meerthika.modal.Review;
 import com.meerthika.service.ReviewService;
 import com.meerthika.service.client.SalonFeignClient;
@@ -24,7 +21,7 @@ public class ReviewController {
     private final SalonFeignClient salonFeignClient;
 
     @PostMapping("/salon/{salonId}")
-    public ResponseEntity<Review> createReview(
+    public ResponseEntity<Review> getReviews(
             @PathVariable Long salonId,
             @RequestBody ReviewRequest req,
             @RequestHeader("Authorization") String jwt
@@ -38,13 +35,13 @@ public class ReviewController {
         return ResponseEntity.ok(review);
     }
     @GetMapping("/salon/{salonId}")
-    public ResponseEntity<List<Review>> getReviewById(
+    public ResponseEntity<List<ReviewResponse>> getReviewById(
             @PathVariable Long salonId,
             @RequestHeader("Authorization") String jwt
     ) throws Exception {
 
         SalonDTO salon = salonFeignClient.getSalonsById(salonId).getBody();
-        List<Review> reviews = reviewService.getReviewsBySalonId(salon.getId());
+        List<ReviewResponse> reviews = reviewService.getReviewsBySalonId(salon.getId());
 
         return ResponseEntity.ok(reviews);
     }

@@ -1,6 +1,7 @@
 package com.meerthika.service;
 
 import com.meerthika.dto.ReviewRequest;
+import com.meerthika.dto.ReviewResponse;
 import com.meerthika.dto.SalonDTO;
 import com.meerthika.dto.UserDTO;
 import com.meerthika.modal.Review;
@@ -15,7 +16,7 @@ public interface ReviewService {
             SalonDTO salon
     );
 
-    List<Review> getReviewsBySalonId(Long salonId);
+    List<ReviewResponse> getReviewsBySalonId(Long salonId);
 
     Review updateReview(ReviewRequest req, Long reviewId, Long userId) throws Exception;
 

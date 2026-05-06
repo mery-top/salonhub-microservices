@@ -1,11 +1,14 @@
 package com.meerthika.service.impl;
 
 import com.meerthika.dto.ReviewRequest;
+import com.meerthika.dto.ReviewResponse;
 import com.meerthika.dto.SalonDTO;
 import com.meerthika.dto.UserDTO;
+import com.meerthika.mapper.ReviewMapper;
 import com.meerthika.modal.Review;
 import com.meerthika.repository.ReviewRepository;
 import com.meerthika.service.ReviewService;
+import com.meerthika.service.client.UserFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final UserFeignClient userFeignClient;
+    private final ReviewMapper reviewMapper;
 
     @Override
     public Review createReview(ReviewRequest req, UserDTO user, SalonDTO salon) {
@@ -30,10 +35,25 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getReviewsBySalonId(Long salonId) {
-        return reviewRepository.findBySalonId(salonId);
-    }
+    public List<ReviewResponse> getReviewsBySalonId(Long salonId) {
 
+        List<Review> reviews = reviewRepository.findBySalonId(salonId);
+
+        return reviews.stream().map(review -> {
+
+            UserDTO user = null;
+            try {
+                user = userFeignClient
+                        .getUserById(review.getUserId())
+                        .getBody();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            return reviewMapper.mapToResponse(review, user);
+
+        }).toList();
+    }
     private Review getReviewById(Long id) throws Exception{
         return reviewRepository.findById(id).orElseThrow(
                 () -> new Exception("review not exist")

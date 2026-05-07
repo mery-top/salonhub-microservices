@@ -5,6 +5,7 @@ import jakarta.persistence.ElementCollection;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 
@@ -27,4 +28,10 @@ public class BookingDTO {
     private BookingStatus status = BookingStatus.PENDING;
 
     private int totalPrice;
+
+    private Set<ServiceDTO> services;
+
+    private UserDTO user;
+
+    private SalonDTO salon;
 }

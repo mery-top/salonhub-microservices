@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class SalonServiceOfferingController {
 
     private final ServiceOfferingService serviceOfferingService;
-    private final ServiceOfferingRepository serviceOfferingRepository;
     private final SalonFeignClient salonFeignClient;
     private final CategoryFeignClient categoryFeignClient;
 

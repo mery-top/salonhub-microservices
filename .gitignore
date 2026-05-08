@@ -1,2 +1,2 @@
-*.postman
-*.idea
+.postman
+.idea

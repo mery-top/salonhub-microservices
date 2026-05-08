@@ -7,6 +7,9 @@ spring:
       discovery:
         locator:
           enabled: true
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       routes:
         - id: USER-SERVICE
           uri:
@@ -49,6 +52,11 @@ spring:
             lb://REVIEW-SERVICE
           predicates:
             - Path=/api/reviews/**
+
+        - id: NOTIFICATION-SERVICE
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/api/notifications/**
 
         - id: AI-SERVICE
           uri:

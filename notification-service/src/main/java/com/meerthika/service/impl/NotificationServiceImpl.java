@@ -19,6 +19,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
     private final BookingFeignClient bookingFeignClient;
+    private final RealTimeCommunicationService realTimeCommunicationService;
 
     @Override
     public NotificationDTO createNotification(Notification notification) throws Exception {
@@ -26,6 +27,8 @@ public class NotificationServiceImpl implements NotificationService {
         Notification savedNotification = notificationRepository.save(notification);
         BookingDTO bookingDTO = bookingFeignClient.getBookingById(savedNotification.getBookingId()).getBody();
         NotificationDTO notificationDTO = NotificationMapper.toDTO(savedNotification, bookingDTO);
+
+        realTimeCommunicationService.sendNotification(notificationDTO);
         return notificationDTO;
     }
 

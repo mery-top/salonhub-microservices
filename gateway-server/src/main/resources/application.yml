@@ -68,7 +68,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: "http://localhost:8080/realms/master/protocol/openid-connect/certs"
+          jwk-set-uri: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
 
 
 
@@ -80,10 +80,8 @@ server:
 
 
 eureka:
-  instance:
-    hostname: localhost
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: "http://localhost:8070/eureka/"
+      defaultZone: "http://eurekaserver:8070/eureka/"

@@ -4,18 +4,19 @@ server:
 spring:
   application:
     name: ai-service
+
   ai:
     ollama:
-      base-url: http://localhost:11434
+      base-url: http://ollama:11434
       chat:
         options:
           model: gemma:2b
 
-
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/hairstyledb
+    url: jdbc:mysql://${MYSQL_HOST:hairstyledb}:3306/hairstyledb
     username: root
     password: root
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,10 +26,9 @@ spring:
     max-in-memory-size: 10MB
 
 eureka:
-  instance:
-    hostname: localhost
   client:
     fetch-registry: true
     register-with-eureka: true
+
     service-url:
-      defaultZone: "http://localhost:8070/eureka/"
+      defaultZone: "http://eurekaserver:8070/eureka/"

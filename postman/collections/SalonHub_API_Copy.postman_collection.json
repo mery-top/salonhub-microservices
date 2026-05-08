@@ -1,0 +1,1459 @@
+{
+  "info": {
+    "_postman_id": "d2a472fb-125c-4eff-b3c3-f5bb06960823",
+    "name": "SalonHub API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "user-service",
+      "item": [
+        {
+          "name": "Get All Users",
+          "id": "7eef6a4f-ef53-4180-b769-35ea8f7dfa85",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create User",
+          "id": "ad9343a6-1755-46e9-a70f-d83716a3b6cf",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"\",\n  \"email\": \"\",\n  \"password\": \"\",\n  \"username\": \"\",\n  \"role\": \"ROLE_CUSTOMER\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "id": "610dba29-6ce7-4404-a63b-36d93b775f83",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"\",\n  \"email\": \"\",\n  \"username\": \"\",\n  \"role\": \"ROLE_CUSTOMER\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User by ID",
+          "id": "d9b7ca2b-9501-40fc-a97d-9a162b8df11c",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "id": "50fc44a1-26e7-4bd8-8859-ac3a1b943576",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Sign Up",
+          "id": "178c3e1b-679e-4586-a76c-fb68dc719e2a",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"\",\n  \"email\": \"\",\n  \"password\": \"\",\n  \"username\": \"\",\n  \"role\": \"ROLE_CUSTOMER\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/signup",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "id": "fdd0ce47-629e-4697-a1f0-e2777574ef66",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"\",\n  \"password\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Access Token from Refresh Token",
+          "id": "11aed71c-9eb2-47b0-ae6b-d534610e604a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/access-token/refresh-token/:refreshToken",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "access-token",
+                "refresh-token",
+                ":refreshToken"
+              ],
+              "variable": [
+                {
+                  "key": "refreshToken",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Profile",
+          "id": "7777031d-1141-4e56-a612-6dae67ee9a9a",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "8f432994-74ab-4781-b269-359f3b5d7d78",
+      "description": "User Microservice Endpoints"
+    },
+    {
+      "name": "salon-service",
+      "item": [
+        {
+          "name": "Create Salon",
+          "id": "83c97970-19ec-4300-a4e4-0b2451fffb99",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"address\": \"\",\n  \"city\": \"\",\n  \"openTime\": \"09:00\",\n  \"closeTime\": \"18:00\",\n  \"images\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/salons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "salons"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Salons",
+          "id": "2ab5ea21-8d27-4868-80df-90cc982a67b1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/salons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "salons"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Salon by ID",
+          "id": "a6a17cd6-6c61-4d46-a0ec-1c645ce8cdc4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/salons/:salonId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "salons",
+                ":salonId"
+              ],
+              "variable": [
+                {
+                  "key": "salonId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Salons by City",
+          "id": "36badac2-11b7-4558-8c16-1a27eb8bb653",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/salons/search?city=mumbai",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "salons",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "mumbai"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Salon",
+          "id": "a831a765-f04b-42b3-b132-e0c6b75b8e62",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"address\": \"\",\n  \"city\": \"\",\n  \"openTime\": \"09:00\",\n  \"closeTime\": \"18:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/salons/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "salons",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Salon by Owner",
+          "id": "783fc1d5-d03e-4474-98b4-d474a7720d62",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/salons/owner",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "salons",
+                "owner"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "e9f361aa-4a7b-46b0-8689-08dd7a7a4f57",
+      "description": "Salon Microservice Endpoints"
+    },
+    {
+      "name": "category-service",
+      "item": [
+        {
+          "name": "Create Category (Salon Owner)",
+          "id": "115ebba9-9a5c-4ff2-9d0c-30fd23f52cea",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"description\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/categories/salon-owner",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "salon-owner"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Categories by Salon",
+          "id": "e500e12b-75ed-4171-87cb-0b02e76088ce",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/categories/salon/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "salon",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Category by ID",
+          "id": "8312d33f-9e44-461f-b43a-0ad7fe7dbae2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/categories/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Category (Salon Owner)",
+          "id": "d95c86d3-f703-4ef7-abdc-85695a4ae977",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/categories/salon-owner/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                "salon-owner",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "22cb7119-dfc8-4a44-bf71-8523dda8ccb0"
+    },
+    {
+      "name": "service-offering",
+      "item": [
+        {
+          "name": "Get Services by IDs (List)",
+          "id": "28bb5628-667d-4d8b-9e4a-b3cf92fc313a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-offering/list/:ids",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-offering",
+                "list",
+                ":ids"
+              ],
+              "variable": [
+                {
+                  "key": "ids",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Services by Salon",
+          "id": "655042f7-f27f-42eb-a524-79f642762499",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-offering/salon/:salonId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-offering",
+                "salon",
+                ":salonId"
+              ],
+              "query": [
+                {
+                  "key": "categoryId",
+                  "value": "",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "salonId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Service by ID",
+          "id": "a759fc79-e0ce-46a7-8be8-5f800d19ae39",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-offering/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-offering",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "a33a3324-a264-4be7-b6f4-2db5472dd33c"
+    },
+    {
+      "name": "booking-service",
+      "item": [
+        {
+          "name": "Create Service Offering (Salon Owner)",
+          "id": "326cb189-7fa3-48d1-b7dd-614939f981e5",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"description\": \"\",\n  \"price\": 0,\n  \"duration\": 30,\n  \"categoryId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/service-offering/salon-owner",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-offering",
+                "salon-owner"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Service Offering (Salon Owner)",
+          "id": "5432a671-1c0d-4214-8816-ce8655276635",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"description\": \"\",\n  \"price\": 0,\n  \"duration\": 30,\n  \"categoryId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/service-offering/salon-owner/:serviceId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-offering",
+                "salon-owner",
+                ":serviceId"
+              ],
+              "variable": [
+                {
+                  "key": "serviceId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Booking",
+          "id": "deb40da7-ecaa-4a73-96c7-2a3786f734f3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceIds\": [1, 2],\n  \"startTime\": \"10:00\",\n  \"bookingDate\": \"2025-01-01\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings?salonId=&paymentMethod=RAZORPAY",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bookings"
+              ],
+              "query": [
+                {
+                  "key": "salonId",
+                  "value": ""
+                },
+                {
+                  "key": "paymentMethod",
+                  "value": "RAZORPAY"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Customer Bookings",
+          "id": "90d2ded3-955e-4021-bf59-9e7a4aac10ab",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/customer",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "customer"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "a84fc789-87e3-4758-a97a-a6e0472c77da"
+    },
+    {
+      "name": "payment-service",
+      "item": [
+        {
+          "name": "Get Salon Bookings",
+          "id": "0f0ab6f1-4aab-4df8-94dd-9e35e2123ac6",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/salon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "salon"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking by ID",
+          "id": "ad4db4d1-6c85-4f54-83f0-56bf6d5fb314",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/:bookingId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                ":bookingId"
+              ],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Booking Status",
+          "id": "69e51d07-36b5-4ac8-b5f6-8629de773586",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/:bookingId/status?status=CONFIRMED",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                ":bookingId",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "CONFIRMED"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "00429ded-68ce-406d-bf49-e1a67f92fccb"
+    },
+    {
+      "name": "Keycloak",
+      "item": [
+        {
+          "name": "Create Notification",
+          "id": "2867b8bc-ce56-4ef6-bc3e-3d2f81847b28",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"salonId\": 1,\n  \"bookingId\": 1,\n  \"message\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Notifications by User ID",
+          "id": "3779a866-15d5-4709-8812-7c1129971929",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/user/:userId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "user",
+                ":userId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Notification as Read",
+          "id": "cb8ff4c2-9d06-4ad0-bd66-8f01237433ab",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/:notificationId/read",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                ":notificationId",
+                "read"
+              ],
+              "variable": [
+                {
+                  "key": "notificationId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Salon Owner Notifications",
+          "id": "37e9fbd7-adb2-42db-9c7c-2e3b1e0f3251",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications/salon-owner/salon/:salonId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "salon-owner",
+                "salon",
+                ":salonId"
+              ],
+              "variable": [
+                {
+                  "key": "salonId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get role by name",
+          "id": "1e4ef2a6-a642-4eed-b533-5bed16d47b18",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Analyze Hair Style",
+          "id": "adee0c71-fde5-41c1-a27f-6a671ff1515d",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [
+                    ""
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/hair/analyze",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "hair",
+                "analyze"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user info",
+          "id": "34498ea8-797f-48c8-a636-8070dfdf0c62",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "cd4647b0-e803-4443-9e8b-f2931ee1c5ef"
+    },
+    {
+      "name": "notification-service",
+      "item": [
+        {
+          "name": "Get Booking Report",
+          "id": "0b24a38e-5644-4ad6-8f92-5eb609532401",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "report"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Earnings Chart",
+          "id": "99d7b682-71c5-4da8-8cc1-a636e8284e0e",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/chart/earnings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "chart",
+                "earnings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bookings Chart",
+          "id": "752698d8-f446-4683-a857-6fe3be38a310",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/chart/bookings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bookings",
+                "chart",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Review",
+          "id": "6daa2984-7d54-4036-8f30-c2ed2e23c61f",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reviewText\": \"\",\n  \"rating\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/:reviewId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reviews",
+                ":reviewId"
+              ],
+              "variable": [
+                {
+                  "key": "reviewId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Review",
+          "id": "3e772671-93a6-4296-bfeb-eed4a18dcb12",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/:reviewId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reviews",
+                ":reviewId"
+              ],
+              "variable": [
+                {
+                  "key": "reviewId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "a125a224-3253-40c0-b895-db1cf7a0777a"
+    },
+    {
+      "name": "review-service",
+      "item": [
+        {
+          "name": "Create Payment",
+          "id": "87509606-0d97-483d-a075-66a9873bd7f3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"customerId\": 1,\n  \"salonId\": 1,\n  \"serviceIds\": [1],\n  \"startTime\": \"10:00\",\n  \"endTime\": \"11:00\",\n  \"bookingDate\": \"2025-01-01\",\n  \"status\": \"PENDING\",\n  \"totalPrice\": 500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/create?paymentMethod=RAZORPAY",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "create"
+              ],
+              "query": [
+                {
+                  "key": "paymentMethod",
+                  "value": "RAZORPAY"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payment Order by ID",
+          "id": "08a58f31-2cbf-47a6-9376-b218794e8fdc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/:paymentOrderId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                ":paymentOrderId"
+              ],
+              "variable": [
+                {
+                  "key": "paymentOrderId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Proceed Payment",
+          "id": "c33f3bd9-38a6-4dbf-a761-984ce7adf603",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/proceed?paymentId=&paymentLinkId=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "proceed"
+              ],
+              "query": [
+                {
+                  "key": "paymentId",
+                  "value": ""
+                },
+                {
+                  "key": "paymentLinkId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Reviews by Salon",
+          "id": "28ca2b16-82b2-4683-8a0c-3a33c9025194",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/salon/:salonId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reviews",
+                "salon",
+                ":salonId"
+              ],
+              "variable": [
+                {
+                  "key": "salonId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "dc98ed1a-c2ff-4f8b-9028-3f4423d077f3"
+    },
+    {
+      "name": "ai-service",
+      "item": [
+        {
+          "name": "Create Review for Salon",
+          "id": "c9cb45b0-b38b-49da-9874-2ad22d308aa1",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reviewText\": \"\",\n  \"rating\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/salon/:salonId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reviews",
+                "salon",
+                ":salonId"
+              ],
+              "variable": [
+                {
+                  "key": "salonId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "03e45152-4bc8-4fd8-a9b7-1eeeffb61690"
+    }
+  ]
+}

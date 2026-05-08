@@ -1,5 +1,43 @@
 services:
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    networks:
+      - meerthika
+
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.4
+    container_name: keycloak
+
+    command: start-dev
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+
+    networks:
+      - meerthika
+
   userdb:
     image: mysql
     container_name: userdb
@@ -102,6 +140,39 @@ services:
     networks:
       - meerthika
 
+  reviewdb:
+    image: mysql
+    container_name: reviewdb
+    ports:
+      - 3307:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: reviewdb
+    networks:
+      - meerthika
+
+  hairstyledb:
+    image: mysql
+    container_name: hairstyledb
+    ports:
+      - 3308:3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hairstyledb
+    networks:
+      - meerthika
 
   user:
     image: meerthika/salon-user-service:v1
@@ -245,8 +316,6 @@ services:
     networks:
       - meerthika
 
-
-
   service-offering:
     image: meerthika/salon-service-offering:v1
     ports:
@@ -259,7 +328,7 @@ services:
       start_period: 10s
     container_name: service-offering
     depends_on:
-      salondb:
+      service-offeringdb:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "service-offering"
@@ -275,7 +344,61 @@ services:
     networks:
       - meerthika
 
+  review:
+    image: meerthika/salon-review-service:v1
+    ports:
+      - 5009:5009
+    healthcheck:
+      test: "curl --fail --silent review:5009/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    container_name: review
+    depends_on:
+      reviewdb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "review"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://reviewdb:3306/reviewdb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - meerthika
+
+  ai:
+    image: meerthika/salon-ai-service:v1
+    ports:
+      - 5010:5010
+    healthcheck:
+      test: "curl --fail --silent ai:5010/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    container_name: ai
+    depends_on:
+      salondb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "ai-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://hairstyledb:3306/hairstyledb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - meerthika
 
   gatewayserver:
     image: meerthika/salon-gateway-server:v1
@@ -316,6 +439,14 @@ services:
       resources:
         limits:
           memory: 700m
+    networks:
+      - meerthika
+
+  face-analyzer:
+    image: meerthika/face-analyzer:v1
+    container_name: face-analyzer
+    ports:
+      - "8000:8000"
     networks:
       - meerthika
 
